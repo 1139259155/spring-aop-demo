@@ -1,7 +1,3 @@
-# spring-aop-demo
-spring-aop-demo
-
-
 # Spring AOP 从入门到精通
 
 官方介绍：https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#aop
@@ -12,18 +8,27 @@ https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference
 
 https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference/core.html#aop
 
+
+
+## 动态代理和字节码
+
+https://www.cnblogs.com/webor2006/p/9875053.html
+
+
+
 ## spring aop 介绍
 
 熟记背诵：介绍		
 
-![image-20200323221136641](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323221136641.png)
+![image-20200323221136641](images/image-20200323221136641.png)
+
 
 
 自己理解：aop  公共功能，比如建立数据库连接，拦截器等
 
 解耦 业务代码和 横切问题分离
 
-![image-20200323221839204](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323221839204.png)
+![image-20200323221839204](images/image-20200323221839204.png)
 
 
 
@@ -33,25 +38,25 @@ https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference/core.h
 
 ### 入门demo
 
-![image-20200324001027408](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200324001027408.png)
+![image-20200324001027408](images/image-20200324001027408.png)
 
 
 
-![image-20200324000853394](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200324000853394.png)
-
-
-
-
-
-![image-20200324000353740](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200324000353740.png)
+![image-20200324000853394](images/image-20200324000853394.png)
 
 
 
 
 
-![image-20200329225546710](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200329225546710.png)
+![image-20200324000353740](images/image-20200324000353740.png)
 
-![image-20200329230358974](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200329230358974.png)
+
+
+
+
+![image-20200329225546710](images/image-20200329225546710.png)
+
+![image-20200329230358974](images/image-20200329230358974.png)
 
 ## 术语
 
@@ -98,11 +103,11 @@ https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference/core.h
 
 
 
-![image-20200324003339545](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200324003339545.png)
+![image-20200324003339545](images/image-20200324003339545.png)
 
 ##### 注意 匹配切点表达式很耗性能
 
-![image-20200324003552657](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200324003552657.png)
+![image-20200324003552657](images/image-20200324003552657.png)
 
 ## when to 执行
 
@@ -116,7 +121,7 @@ Spring AOP 包括以下类型的建议：
 - 在(最终)建议之后：无论连接点退出的方式(正常或异常 return)，都要执行建议。
 - 围绕建议：围绕连接点的建议，例如方法调用。这是最有力的建议。 around 通知可以在方法调用之前和之后执行自定义行为。它还负责选择是继续加入点还是通过返回自己的 return value 或抛出 exception 来快速建议的方法执行。
 
-![image-20200323235351548](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323235351548.png)
+![image-20200323235351548](images/image-20200323235351548.png)
 
 
 
@@ -126,7 +131,7 @@ Spring AOP 包括以下类型的建议：
 
 ## spring aop 底层实现原理
 
-![image-20200323221403191](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323221403191.png)
+![image-20200323221403191](images/image-20200323221403191.png)
 
 
 
@@ -136,7 +141,7 @@ Spring AOP 包括以下类型的建议：
 
 
 
-![image-20200323221429300](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323221429300.png)
+![image-20200323221429300](images/image-20200323221429300.png)
 
 
 
@@ -191,6 +196,8 @@ CGLIB 代理通常应对用户透明。但是，有一些问题需要考虑：
 
 CGLIB 代理和动态代理之间几乎没有性能差异。从 Spring 1.0 开始，动态代理略快一些。但是，这可能会在未来发生变化。 在这种情况下，绩效不应该是一个决定性的考虑因素。
 
+![image-20200405234815051](images/image-20200405234815051.png)
+
 
 
 ### CGLib原理
@@ -205,4 +212,117 @@ cglib生成的类可以 写流导出class
 
 ### 重新尝试策略
 
-![image-20200323233739109](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200323233739109.png)
+![image-20200323233739109](images/image-20200323233739109.png)
+
+
+
+## 保持动态代理临时文件
+
+https://blog.csdn.net/u011244682/article/details/96335660
+
+```java
+// 保存jdk动态代理proxy临时文件
+System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+// 保存cglib动态代理proxy临时文件
+System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "cglibproxyclass");
+```
+
+![image-20200406002421638](images/image-20200406002421638.png)
+
+
+
+## 真正的代理文件
+
+
+
+## 解读proxy临时文件
+
+
+
+
+
+
+
+## spring中代理是什么时候生成的
+
+在spring bean初始化的时候
+
+
+
+## spring中代理是怎么生成的
+
+在容器初始化时
+
+![image-20200422231849414](images/image-20200422231849414.png)
+
+![image-20200423010423970](images/image-20200423010423970.png)
+
+
+
+BeanFactory -> AbstractBeanFactory ->  getBean()
+
+![image-20200422232945381](images/image-20200422232945381.png)
+
+
+
+```
+doGetBean
+```
+
+![image-20200422233232517](images/image-20200422233232517.png)
+
+
+
+AbstractAutowireCapableBeanFactory createBean()
+
+![image-20200422233450858](images/image-20200422233450858.png)
+
+
+
+![image-20200422234444785](images/image-20200422234444785.png)
+
+
+
+![image-20200422234504432](images/image-20200422234504432.png)
+
+
+
+AbstractAutowireCapableBeanFactory applyBeanPostProcessorsAfterInitialization()
+
+![image-20200422234359673](images/image-20200422234359673.png)
+
+
+
+AbstractAutoProxyCreator postProcessAfterInitialization()
+
+![image-20200422234805319](images/image-20200422234805319.png)
+
+
+
+AbstractAutoProxyCreator wrapIfNecessary()
+
+![image-20200422235033605](images/image-20200422235033605.png)
+
+
+
+![image-20200422235236329](images/image-20200422235236329.png)
+
+
+
+![image-20200423004259402](images/image-20200423004259402.png)
+
+
+
+
+
+## 代理是什么放入bean容器的
+
+看调用链
+
+![image-20200423005531401](images/image-20200423005531401.png)
+
+
+
+把proxy代理对象(beanName=“userDaoImpl”)加入 singletonObjects 容器中（singletonObjects Map容器中即是spring的IOC容器之一）
+
+![image-20200423005904877](images/image-20200423005904877.png)
